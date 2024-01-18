@@ -4,7 +4,13 @@ export type IfChildComponentProps = {
   children: React.ReactNode | (() => JSX.Element);
 };
 
-export type IfChildComponent = ReactElement<IfChildComponentProps>;
+export type ElseIfComponentProps = {
+  condition: boolean;
+} & IfChildComponentProps;
+
+export type IfChildComponent =
+  | ReactElement<IfChildComponentProps>
+  | ReactElement<ElseIfComponentProps>;
 
 export type IfProps = {
   condition: boolean;

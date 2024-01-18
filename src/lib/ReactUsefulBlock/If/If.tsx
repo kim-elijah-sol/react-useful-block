@@ -1,24 +1,52 @@
-import { Children, cloneElement, isValidElement } from "react";
+import { Children, ReactElement, isValidElement, useMemo } from "react";
 import Then from "./Then";
-import Else from "./Else";
-import { IfChildComponent, IfProps } from "./type";
+import { ElseIfComponentProps, IfProps } from "./type";
+import ElseIf from "./ElseIf";
 
 function If({ condition, children }: IfProps) {
-  const renderableComponent = (
-    Children.toArray(children)
+  const isThenRender = condition;
+
+  const isElseIfRender = useMemo(() => {
+    if (isThenRender) {
+      return false;
+    }
+
+    return Children.toArray(children)
       .filter(isValidElement)
-      .filter((child) => {
-        if (child.type === Then) {
-          return condition;
+      .some((child) => {
+        if (child.type === ElseIf) {
+          return (
+            (child as ReactElement<ElseIfComponentProps>).props.condition ===
+            true
+          );
         }
 
-        return condition === false && child.type === Else;
-      }) as IfChildComponent[]
-  ).map((child) => {
-    return cloneElement(child);
-  });
+        return false;
+      });
+  }, [isThenRender, children]);
 
-  console.log(children);
+  const isElseRender = useMemo(() => {
+    return !isThenRender && !isElseIfRender;
+  }, [isThenRender, isElseIfRender]);
+
+  const renderableComponent = useMemo(() => {
+    return Children.toArray(children)
+      .filter(isValidElement)
+      .find((child) => {
+        if (child.type === Then) {
+          return isThenRender;
+        }
+        if (child.type === ElseIf) {
+          return (
+            isElseIfRender &&
+            (child as ReactElement<ElseIfComponentProps>).props.condition ===
+              true
+          );
+        }
+
+        return isElseRender;
+      });
+  }, [isThenRender, isElseIfRender, isElseRender, children]);
 
   return <>{renderableComponent}</>;
 }
