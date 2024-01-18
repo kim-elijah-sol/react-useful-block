@@ -10,6 +10,11 @@ function IfExample() {
 
       <If condition={value !== null}>
         <If.Then>
+          {/**
+           * @description
+           * 바로 value 를 타입 단언하여 사용하면 에러가 발생하여,
+           * children 을 함수로 받아서 사용
+           */}
           {() => {
             return (
               <>
