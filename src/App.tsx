@@ -1,5 +1,12 @@
+import IfExample from "./example/IfExample";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <IfExample />
+      <hr />
+    </>
+  );
 }
 
 export default App;
