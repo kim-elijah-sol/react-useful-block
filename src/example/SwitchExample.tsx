@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Switch, { Case } from "../lib/ReactUsefulBlock/Switch";
+import Switch, { Case, Default } from "../lib/ReactUsefulBlock/Switch";
 
 function SwitchExample() {
   const [value, setValue] = useState<number>(1);
@@ -7,6 +7,8 @@ function SwitchExample() {
   function handleClick() {
     if (value === 1) {
       setValue(2);
+    } else if (value === 2) {
+      setValue(3);
     } else {
       setValue(1);
     }
@@ -25,6 +27,9 @@ function SwitchExample() {
         <Case value={2}>
           <p>value is two</p>
         </Case>
+        <Default>
+          <p>value is other value</p>
+        </Default>
       </Switch>
     </div>
   );

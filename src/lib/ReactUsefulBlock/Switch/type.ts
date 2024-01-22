@@ -6,7 +6,7 @@ export type CaseProps<T> = {
 };
 
 export type DefaultProps = {
-  children: ReactNode;
+  children: ReactNode | (() => JSX.Element);
 };
 
 export type SwitchChildComponent<T> =
