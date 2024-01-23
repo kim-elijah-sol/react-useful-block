@@ -1,5 +1,6 @@
 import IfExample from "./example/IfExample";
 import SwitchExample from "./example/SwitchExample";
+import UseSwitchExample from "./example/UseSwitchExample";
 
 function App() {
   return (
@@ -7,6 +8,8 @@ function App() {
       <IfExample />
       <hr />
       <SwitchExample />
+      <hr />
+      <UseSwitchExample />
     </>
   );
 }
